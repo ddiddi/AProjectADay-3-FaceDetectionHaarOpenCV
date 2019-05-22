@@ -30,22 +30,19 @@ def detect_face_openCV(face_classifier, frame, height=300,width=0):
 input_video = sys.argv[1]
 
 # Select classifier for haar landamark detection
-face_classifier = cv2.CascadeClassifier('./haarcascade_frontalface_default.xml')
+face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # Create video capture object to take video input and process first frame
 cap = cv2.VideoCapture(input_video)
 has_frame, frame = cap.read()
 
 # Create video wrier object to create output video object
-vid_writer = cv2.VideoWriter('temp-{}.avi'.format(str(input_video).split(".")[0]),cv2.VideoWriter_fourcc('M','J','P','G'), 15, (frame.shape[1],frame.shape[0]))
-
-counter = 0
+vid_writer = cv2.VideoWriter('output-{}.avi'.format(str(input_video).split(".")[0]),cv2.VideoWriter_fourcc('M','J','P','G'), 15, (frame.shape[1],frame.shape[0]))
 
 while(1):
     has_frame,frame = cap.read()
     if not has_frame:
         break
-    count += 1
 
     # Call function to give output frames
     outOpencvHaar = detect_face_openCV(face_classifier, frame)
